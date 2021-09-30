@@ -88,6 +88,7 @@ def evaluate_model(model, classes, tr_X, tr_Y, te_X, te_Y):
     # Plot accuracy
     axis, cf = lib_plot.plot_confusion_matrix(
         te_Y, te_Y_predict, classes, normalize=False, size=(12, 8))
+    __import__('ipdb').set_trace()
     plt.show()
 
 
@@ -101,7 +102,7 @@ def main():
     print("\nReading csv files of classes, features, and labels ...")
     X = np.loadtxt(SRC_PROCESSED_FEATURES, dtype=float)  # features
     Y = np.loadtxt(SRC_PROCESSED_FEATURES_LABELS, dtype=int)  # labels
-    
+
     # -- Train-test split
     tr_X, te_X, tr_Y, te_Y = train_test_split(
         X, Y, ratio_of_test_size=0.3)
@@ -115,14 +116,15 @@ def main():
     model = ClassifierOfflineTrain()
     model.train(tr_X, tr_Y)
 
-    # -- Evaluate model
-    print("\nStart evaluating model ...")
-    evaluate_model(model, CLASSES, tr_X, tr_Y, te_X, te_Y)
-
     # -- Save model
     print("\nSave model to " + DST_MODEL_PATH)
     with open(DST_MODEL_PATH, 'wb') as f:
         pickle.dump(model, f)
+
+    # -- Evaluate model
+    print("\nStart evaluating model ...")
+    evaluate_model(model, CLASSES, tr_X, tr_Y, te_X, te_Y)
+
 
 
 if __name__ == "__main__":

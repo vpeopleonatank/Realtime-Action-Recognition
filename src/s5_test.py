@@ -23,7 +23,7 @@ python src/s5_test.py \
     --data_type video \
     --data_path data_test/exercise.avi \
     --output_folder output
-    
+
 (2) Test on a folder of images:
 python src/s5_test.py \
     --model_path model/trained_classifier.pickle \
@@ -37,7 +37,7 @@ python src/s5_test.py \
     --data_type webcam \
     --data_path 0 \
     --output_folder output
-    
+
 '''
 
 
@@ -367,7 +367,7 @@ if __name__ == "__main__":
                 print("prediced label is :", dict_id2label[min_id])
 
             # -- Display image, and write to video.avi
-            img_displayer.display(img_disp, wait_key_ms=1)
+            # img_displayer.display(img_disp, wait_key_ms=1)
             video_writer.write(img_disp)
 
             # -- Get skeleton data and save to file

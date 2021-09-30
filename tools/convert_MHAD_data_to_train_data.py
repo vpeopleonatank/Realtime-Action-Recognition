@@ -93,7 +93,6 @@ def main(filepath):
                 else:
                     data.append((p / IMAGE_HEIGHT).item())
             train_data.append(data)
-        break
 
     with open(filepath, 'w') as f:
         simplejson.dump(train_data, f)

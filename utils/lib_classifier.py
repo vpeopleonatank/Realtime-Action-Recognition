@@ -8,7 +8,7 @@ This script includes:
     It uses FeatureGenerator to extract features,
     and then use ClassifierOfflineTrain to recognize the action.
     Notice, this model is only for recognizing the action of one person.
-    
+
 TODO: Add more comments to this function.
 '''
 
@@ -52,7 +52,7 @@ NUM_FEATURES_FROM_PCA = 50
 
 class ClassifierOfflineTrain(object):
     ''' The classifer for offline training.
-        The input features to this classifier are already 
+        The input features to this classifier are already
             processed by `class FeatureGenerator`.
     '''
 
@@ -124,7 +124,7 @@ class ClassifierOnlineTest(object):
     ''' Classifier for online inference.
         The input data to this classifier is the raw skeleton data, so they
             are processed by `class FeatureGenerator` before sending to the
-            self.model trained by `class ClassifierOfflineTrain`. 
+            self.model trained by `class ClassifierOfflineTrain`.
     '''
 
     def __init__(self, model_path, action_labels, window_size, human_id=0):
