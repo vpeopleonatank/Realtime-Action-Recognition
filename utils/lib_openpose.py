@@ -65,44 +65,44 @@ class SkeletonDetector(object):
 
     def __init__(self, model="cmu", image_size="432x368"):
         ''' Arguments:
-            model {str}: "cmu" or "mobilenet_thin".        
-            image_size {str}: resize input images before they are processed. 
-                Recommends : 432x368, 336x288, 304x240, 656x368, 
+            model {str}: "cmu" or "mobilenet_thin".
+            image_size {str}: resize input images before they are processed.
+                Recommends : 432x368, 336x288, 304x240, 656x368,
         '''
         # -- Check input
         assert(model in ["mobilenet_thin", "cmu"])
         self._w, self._h = _get_input_img_size_from_string(image_size)
-        
+
         # -- Set up openpose model
         self._model = model
         self._resize_out_ratio = 4.0 # Resize heatmaps before they are post-processed. If image_size is small, this should be large.
         self._config = _set_config()
         self._tf_pose_estimator = TfPoseEstimator(
-            get_graph_path(self._model), 
+            get_graph_path(self._model),
             target_size=(self._w, self._h),
             tf_config=self._config)
         self._prev_t = time.time()
         self._cnt_image = 0
-        
+
         # -- Set logger
         self._logger = _set_logger()
-        
+
 
     def detect(self, image):
         ''' Detect human skeleton from image.
         Arguments:
             image: RGB image with arbitrary size. It will be resized to (self._w, self._h).
         Returns:
-            humans {list of class Human}: 
-                `class Human` is defined in 
+            humans {list of class Human}:
+                `class Human` is defined in
                 "src/githubs/tf-pose-estimation/tf_pose/estimator.py"
-                
+
                 The variable `humans` is returned by the function
                 `TfPoseEstimator.inference` which is defined in
                 `src/githubs/tf-pose-estimation/tf_pose/estimator.py`.
 
-                I've written a function `self.humans_to_skels_list` to 
-                extract the skeleton from this `class Human`. 
+                I've written a function `self.humans_to_skels_list` to
+                extract the skeleton from this `class Human`.
         '''
 
         self._cnt_image += 1
@@ -122,7 +122,7 @@ class SkeletonDetector(object):
         self._logger.info('inference image in %.4f seconds.' % (elapsed))
 
         return humans
-    
+
     def draw(self, img_disp, humans):
         ''' Draw human skeleton on img_disp inplace.
         Argument:
@@ -137,7 +137,7 @@ class SkeletonDetector(object):
                         (0, 0, 255), 2)
         self._prev_t = time.time()
 
-    def humans_to_skels_list(self, humans, scale_h = None): 
+    def humans_to_skels_list(self, humans, scale_h = None):
         ''' Get skeleton data of (x, y * scale_h) from humans.
         Arguments:
             humans {a class returned by self.detect}
@@ -162,16 +162,16 @@ class SkeletonDetector(object):
                 skeleton[2*idx+1]=body_part.y * scale_h
             skeletons.append(skeleton)
         return skeletons, scale_h
-    
+
 
 def test_openpose_on_webcamera():
-    
+
     # -- Initialize web camera reader
     from utils.lib_images_io import ReadFromWebcam, ImageDisplayer
     webcam_reader = ReadFromWebcam(max_framerate=10)
     img_displayer = ImageDisplayer()
-    
-    # -- Initialize openpose detector    
+
+    # -- Initialize openpose detector
     skeleton_detector = SkeletonDetector("mobilenet_thin", "432x368")
 
     # -- Read image and detect
@@ -184,12 +184,12 @@ def test_openpose_on_webcamera():
 
         # Detect
         humans = skeleton_detector.detect(img)
-        
+
         # Draw
         img_disp = img.copy()
         skeleton_detector.draw(img_disp, humans)
         img_displayer.display(img_disp)
-        
+
     print("Program ends")
 
 if __name__ == "__main__":

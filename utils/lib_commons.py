@@ -34,7 +34,7 @@ def read_listlist(filepath):
 
 
 def read_yaml(filepath):
-    ''' Input a string filepath, 
+    ''' Input a string filepath,
         output a `dict` containing the contents of the yaml file.
     '''
     with open(filepath, 'r') as stream:

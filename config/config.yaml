@@ -32,7 +32,8 @@ s2_put_skeleton_txts_to_a_single_txt.py:
     detected_skeletons_folder: *skels_folder
   output:
     # One txt containing all valid skeletons.
-    all_skeletons_txt: &skels_txt data_proc/raw_skeletons/skeletons_info.txt
+    # all_skeletons_txt: &skels_txt data_proc/raw_skeletons/skeletons_info.txt
+    all_skeletons_txt: &skels_txt data/new_skeleton_data.txt
 
 s3_preprocess_features.py:
   input: 

@@ -3,12 +3,12 @@
 
 '''
 Read training images based on `valid_images.txt` and then detect skeletons.
-    
+
 In each image, there should be only 1 person performing one type of action.
 Each image is named as 00001.jpg, 00002.jpg, ...
 
 An example of the content of valid_images.txt is shown below:
-    
+
     jump_03-12-09-18-26-176
     58 680
 
@@ -25,7 +25,7 @@ represents the starting index and ending index of a certain action.
 Input:
     SRC_IMAGES_DESCRIPTION_TXT
     SRC_IMAGES_FOLDER
-    
+
 Output:
     DST_IMAGES_INFO_TXT
     DST_DETECTED_SKELETONS_FOLDER
@@ -38,7 +38,10 @@ import yaml
 if True:  # Include project path
     import sys
     import os
-    ROOT = os.path.dirname(os.path.abspath(__file__))+"/../"
+    # ROOT = os.path.dirname(os.path.abspath(__file__))+"/../"
+    parent = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          os.pardir)
+    ROOT = os.path.abspath(parent)+"/"
     CURR_PATH = os.path.dirname(os.path.abspath(__file__))+"/"
     sys.path.append(ROOT)
 
